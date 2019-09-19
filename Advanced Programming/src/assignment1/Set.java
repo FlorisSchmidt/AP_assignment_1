@@ -1,60 +1,99 @@
 package assignment1;
-import java.util.List;
-
-import java.util.Iterator;
 
 public class Set implements SetInterface {
 
-    private char[] setArray;
-    public int size;
+    private Identifier[] setArray;
+    private int index;
 
-    UtilSet() {
-        setArray = new char[10];
-        size = 0;
+    public Set() {
+        this.setArray = new Identifier[20]
     }
 
-    private boolean contains(char[] array, int v) {
-        boolean result = false;
-        for (int i : array) {
-            if (i == v) {
-                result = true;
-                break;
+    Set(Set src) {
+        Set setCopy = new Set();
+        for (Identifier i : src.setArray) {
+            setCopy.add(i);
+        }
+        index = src.index;
+    }
+
+    @Override
+    public void init() {
+        setArray = new Identifier[setArray.length];
+    }
+
+    @Override
+    public boolean add(Identifier e) {
+        if (setArray.length < 20 && !(this.contains(e))) {
+            setArray[index] = e;
+            index++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Identifier get() {
+        Identifier element = this.setArray[this.size()];
+        this.setArray[this.size()] = null;
+        return element;
+    }
+
+    @Override
+    public boolean contains(Identifier e) {
+        for (Identifier i : this.setArray) {
+            if (i == e) {
+                return true;
             }
         }
-
-        return result;
-    }
-    public boolean add(char e) {
-        if (!contains(setArray, e)) {
-            setArray[size] = e;
-            size += 1;
-            return true; }
-
         return false;
+    }
+
+    @Override
+    public int size() {
+        int counter = 0;
+        for (int i = 0; i < this.setArray.length; i++) {
+            if (this.setArray[i] != null) {
+                counter++;
+            }
+            else {
+                break; }
         }
-
-    char[] getValues() {
-        return setArray;
+        return counter;
     }
 
-    void clear() {
-        setArray = null;
-    }
 
-    boolean isEmpty() {
-        for (Object ob : setArray) {
-            if (ob != null) {
+    @Override
+    public boolean equals(Set s) {
+        if (!(this.size() == s.size())) {
+            return false;
+        }
+        for (Identifier i : this.setArray) {
+            if (!s.contains(i)) {
                 return false;
             }
         }
         return true;
     }
 
-    boolean remove(Character c) {
-        return set.remove(c);
+    @Override
+    public Set union(Set s) {
+        Set setCopy = new Set(this);
+        return null;
     }
 
-    public Iterator<Character> iterator() {
-        return set.iterator();
+    @Override
+    public Set difference(Set s) {
+        return null;
+    }
+
+    @Override
+    public Set intersection(Set s) {
+        return null;
+    }
+
+    @Override
+    public Set symDifference(Set s) {
+        return null;
     }
 }
