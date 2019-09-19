@@ -6,7 +6,7 @@ public class Set implements SetInterface {
     private int index;
 
     public Set() {
-        this.setArray = new Identifier[20]
+        this.setArray = new Identifier[20];
     }
 
     Set(Set src) {
