@@ -84,7 +84,19 @@ public class Set implements SetInterface {
 
     @Override
     public Set difference(Set s) {
-        return null;
+        Set differences = new Set();
+        Set subject = new Set(this);
+        Set comparand = new Set(s);
+
+        for(int i = 0;i<subject.size();i++){
+            Identifier id = subject.get();
+            for(int k = 0;k<subject.size();k++){
+               if(id.get().equals(comparand.get().toString())){
+                   differences.add(id);
+                }
+            }
+        }
+        return differences;
     }
 
     @Override
