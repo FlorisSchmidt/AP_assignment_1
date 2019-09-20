@@ -6,7 +6,7 @@ public class Set implements SetInterface {
     private int index;
 
     public Set() {
-        this.setArray = new Identifier[20];
+        setArray = new Identifier[20];
     }
 
     Set(Set src) {
@@ -24,7 +24,7 @@ public class Set implements SetInterface {
 
     @Override
     public boolean add(Identifier e) {
-        if (setArray.length < 20 && !(this.contains(e))) {
+        if (size() < 20 && !(contains(e))) {
             setArray[index] = e;
             index++;
             return true;
@@ -34,14 +34,14 @@ public class Set implements SetInterface {
 
     @Override
     public Identifier get() {
-        Identifier element = this.setArray[this.size()];
-        this.setArray[this.size()] = null;
+        Identifier element = setArray[size()-1];
+        setArray[size()-1] = null;
         return element;
     }
 
     @Override
     public boolean contains(Identifier e) {
-        for (Identifier i : this.setArray) {
+        for (Identifier i : setArray) {
             if (i == e) {
                 return true;
             }
@@ -52,8 +52,8 @@ public class Set implements SetInterface {
     @Override
     public int size() {
         int counter = 0;
-        for (int i = 0; i < this.setArray.length; i++) {
-            if (this.setArray[i] != null) {
+        for (int i = 0; i < setArray.length; i++) {
+            if (setArray[i] != null) {
                 counter++;
             }
             else {
@@ -65,10 +65,10 @@ public class Set implements SetInterface {
 
     @Override
     public boolean equals(Set s) {
-        if (!(this.size() == s.size())) {
+        if (!(size() == s.size())) {
             return false;
         }
-        for (Identifier i : this.setArray) {
+        for (Identifier i : setArray) {
             if (!s.contains(i)) {
                 return false;
             }

@@ -8,7 +8,7 @@ public class Identifier implements IdentifierInterface {
     private StringBuffer sb;
     private boolean addWasCalled;
 
-    Identifier(char c){
+    Identifier(){
         sb = new StringBuffer();
         addWasCalled = false;
         init();
@@ -18,6 +18,7 @@ public class Identifier implements IdentifierInterface {
     public void init() {
         sb.delete(0,sb.length());
         sb.append('c');
+        addWasCalled = false;
     }
 
     @Override

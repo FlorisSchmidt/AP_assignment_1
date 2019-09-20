@@ -1,21 +1,17 @@
 package assignment1;
 
-import java.util.Arrays;
+import java.io.PrintStream;
 
 public class Main {
 
+	private PrintStream out;
+
+	private void start(){
+		out = new PrintStream(System.out);
+	}
+
 	public static void main(String[] args) {
-		UtilSet set = new UtilSet();
-		set.add('H');
-		set.add('G');
-		System.out.println(Arrays.toString(set.getValues()));
-		set.remove('G');
-		System.out.println(Arrays.toString(set.getValues()));
-		set.add('K');
-		System.out.println(set.isEmpty());
-		set.clear();
-		System.out.println(Arrays.toString(set.getValues()));
-		System.out.println(set.isEmpty());
+		new Main().start();
 	}
 
 }
