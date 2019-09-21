@@ -5,17 +5,23 @@ public class Set implements SetInterface {
     private Identifier[] setArray;
     private int index;
 
-    public Set() {
+    Set() {
         setArray = new Identifier[20];
     }
 
-    Set(Set src) {
+    private Set(Set src) {
         Set setCopy = new Set();
         setArray = new Identifier[20];
-        for (Identifier i : src.setArray) {
-            setCopy.add(i);
+        for (int i = 0; i < src.size(); i++) {
+            String idtString = src.setArray[i].get();
+            Identifier idt = new Identifier();
+            for (int j = 0; j < idtString.length(); j++) {
+                char c = idtString.charAt(j);
+                idt.add(c);
+            }
+            setArray[i] = idt;
+            index = src.index;
         }
-        index = src.index;
     }
 
     @Override
@@ -35,8 +41,9 @@ public class Set implements SetInterface {
 
     @Override
     public Identifier get() {
-        Identifier element = setArray[size()-1];
-        setArray[size()-1] = null;
+        if (size() == 0) return null;
+        Identifier element = setArray[size() - 1];
+        setArray[size() - 1] = null;
         return element;
     }
 
@@ -56,9 +63,9 @@ public class Set implements SetInterface {
         for (int i = 0; i < setArray.length; i++) {
             if (setArray[i] != null) {
                 counter++;
+            } else {
+                break;
             }
-            else {
-                break; }
         }
         return counter;
     }
@@ -80,22 +87,23 @@ public class Set implements SetInterface {
 
     @Override
     public Set union(Set s) {
-        Set setCopy = new Set(this);
-        return null;
+        Set union = new Set(this);
+        Set subject = new Set(s);
+        for (int i = 0; i < s.size(); i++) {
+            Identifier idt = subject.get();
+            union.add(idt);
+        }
+        return union;
     }
 
     @Override
     public Set difference(Set s) {
         Set differences = new Set();
         Set subject = new Set(this);
-        Set comparand = new Set(s);
-
-        for(int i = 0;i<subject.size();i++){
-            Identifier id = subject.get();
-            for(int k = 0;k<subject.size();k++){
-               if(id.get().equals(comparand.get().toString())){
-                   differences.add(id);
-                }
+        for (int i = 0; i < size(); i++) {
+            Identifier idt = subject.get();
+            if (!s.contains(idt)) {
+                differences.add(idt);
             }
         }
         return differences;
@@ -103,11 +111,33 @@ public class Set implements SetInterface {
 
     @Override
     public Set intersection(Set s) {
-        return null;
+        Set intersect = new Set();
+        Set subject = new Set(this);
+        for (int i = 0; i < size(); i++) {
+            Identifier idt = subject.get();
+            if (s.contains(idt)) {
+                intersect.add(idt);
+            }
+        }
+        return intersect;
     }
+
 
     @Override
     public Set symDifference(Set s) {
-        return null;
+        Set symDif = new Set();
+        Set subject = new Set(this);
+        Set comparand = new Set(s);
+        for (int i = 0; i < size(); i++) {
+            Identifier subIdt = subject.get();
+            Identifier comIdt = comparand.get();
+            if (!s.contains(subIdt)) {
+                symDif.add(subIdt);
+            }
+            if (!contains(comIdt)) {
+                symDif.add(comIdt);
+            }
+        }
+        return symDif;
     }
 }
