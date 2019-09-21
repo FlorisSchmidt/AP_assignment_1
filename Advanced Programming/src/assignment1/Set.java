@@ -11,6 +11,7 @@ public class Set implements SetInterface {
 
     Set(Set src) {
         Set setCopy = new Set();
+        setArray = new Identifier[20];
         for (Identifier i : src.setArray) {
             setCopy.add(i);
         }
@@ -41,11 +42,11 @@ public class Set implements SetInterface {
 
     @Override
     public boolean contains(Identifier e) {
-        for (Identifier i : setArray) {
-            if (i == e) {
+        if (size() == 0) return false;
+        for (int i = 0; i < size(); i++)
+            if (setArray[i].get().equals(e.get())) {
                 return true;
             }
-        }
         return false;
     }
 
@@ -68,8 +69,9 @@ public class Set implements SetInterface {
         if (!(size() == s.size())) {
             return false;
         }
-        for (Identifier i : setArray) {
-            if (!s.contains(i)) {
+        for (int i = 0; i < size(); i++) {
+            if (!s.contains(setArray[i])) {
+                System.out.println(i);
                 return false;
             }
         }
