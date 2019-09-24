@@ -10,60 +10,34 @@ public class Main {
 	public static final String IMPROPER_FORMAT_MESSAGE = "Input not properly formatted";
 	static final int MAX_NUMBER_OF_ELEMENTS = 10;
 
-	private boolean inputContainsCorrectSet(Scanner input, Set set){
-		String setString = input.next();
-		if(setString.charAt(0)!='{') {
+	private boolean inputContainsCorrectSet(Scanner input, Set set) {
+		StringBuffer inputString = new StringBuffer(input.nextLine());
+		if(inputString.charAt(0)!='{'||inputString.charAt(inputString.length()-1)!='}'){
 			return false;
 		}
-		StringBuffer sb = new StringBuffer();
-		int i = 1;
-		int idx = 0;
-		while(setString.charAt(i)!= '}') {
-			while (true) {
-				char c = setString.charAt(i);
-				System.out.println(c);
-				if (c == ',' || c == '}')  {
-					i++;
-					break;
-				}
-				sb.insert(idx, c);
-				idx++;
-				i++;
+
+		Scanner cleanInput = new Scanner(inputString.substring(1,inputString.length()-1));
+
+		while(cleanInput.hasNext()) {
+			if(!addElement(cleanInput, set)){
+				return false;
 			}
-			idx = 0;
-			if (setString.charAt(i-1) == '}') break;
-			addElement(sb.toString(), set);
-			System.out.println("added to set");
-			sb.delete(0, sb.length());
-			idx = 0;
 		}
 		return true;
 	}
 
-	private boolean addElement(String word, Set set) {
-		Identifier i = new Identifier();
-		for (char c: word.toCharArray()) {i.add(c);}
-		return set.add(i);
+	private boolean addElement(Scanner input, Set set){
+		Identifier id = new Identifier();
+		String chars = input.next();
+		for(int i = 0;i<chars.length();i++){
+			if(id.add(chars.charAt(i))){
+				continue;
+			}
+			return false;
+		}
+		set.add(id);
+		return true;
 	}
-
-	private char nextChar(Scanner in) {
-		return in.next().charAt(0); }
-
-	boolean nextCharIs(Scanner in, char c) {
-		return in.hasNext(Pattern.quote(c+"")); }
-
-	// Method to check if the next character to be read when
-	// calling nextChar() is a digit.
-
-	boolean nextCharIsDigit (Scanner in) {
-		return in.hasNext("[0-9]");
-	}
-
-	// Method to check if the next character to be read when
-	// calling nextChar() is a letter.
-
-	boolean nextCharIsLetter (Scanner in) {
-		return in.hasNext("[a-zA-Z]"); }
 
 	private void calculateAndGiveOutput(){
 	    //TODO make method
@@ -92,6 +66,7 @@ public class Main {
 				set2 = new Set();
 
 		while(askBothSets(in,set1,set2)){
+			out.print("\n");
 			calculateAndGiveOutput();
 		}
 
