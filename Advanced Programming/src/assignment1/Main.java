@@ -35,7 +35,8 @@ public class Main {
 			}
 			return false;
 		}
-		return set.add(id);
+		set.add(id);
+		return true;
 	}
 
 	private void calculateAndGiveOutput(){
