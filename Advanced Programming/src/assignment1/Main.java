@@ -2,7 +2,6 @@ package assignment1;
 
 import java.io.PrintStream;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
 
@@ -57,7 +56,18 @@ public class Main {
 	}
 
 	private void calculateAndGiveOutput(Set set1,Set set2){
-		out.print("end");
+		out.printf("difference = {%s}\n", setToString(set1.difference(set2)));
+		out.printf("intersection = {%s}\n", setToString(set1.intersection(set2)));
+		out.printf("union = {%s}\n", setToString(set1.union(set2)));
+		out.printf("sym. diff. = {%s}\n", setToString(set1.symDifference(set2)));
+	}
+
+	private String setToString(Set set){
+		String result = "";
+		for(int i = 0;i<set.size();i++) {
+			result = result.concat(set.get().get() + " ");
+		}
+		return result;
 	}
 
 	private boolean askSet(Scanner input, String question, Set set){
