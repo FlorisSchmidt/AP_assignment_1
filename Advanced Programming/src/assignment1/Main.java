@@ -7,23 +7,41 @@ import java.util.regex.Pattern;
 public class Main {
 
 	private PrintStream out;
-	public static final String IMPROPER_FORMAT_MESSAGE = "Input not properly formatted";
 	static final int MAX_NUMBER_OF_ELEMENTS = 10;
 
 	private boolean inputContainsCorrectSet(Scanner input, Set set) {
 		StringBuffer inputString = new StringBuffer(input.nextLine());
-		if(inputString.charAt(0)!='{'||inputString.charAt(inputString.length()-1)!='}'){
+		if(inputString.length()==0){
 			return false;
 		}
+		if(inputString.charAt(0)!='{'){
+			return throwError("Missing {");
+		}
+		if(inputString.charAt(inputString.length()-1)!='}'){
+			return throwError("Missing }");
+		}
 
+		return initSet(inputString,set);
+	}
+
+	private boolean initSet(StringBuffer inputString, Set set){
 		Scanner cleanInput = new Scanner(inputString.substring(1,inputString.length()-1));
 
 		while(cleanInput.hasNext()) {
 			if(!addElement(cleanInput, set)){
-				return false;
+				set.init();
+				return throwError("Incorrect input");
+			}
+			if(set.size()>MAX_NUMBER_OF_ELEMENTS){
+				return throwError("To many identities");
 			}
 		}
 		return true;
+	}
+
+	private boolean throwError(String error){
+		out.print(error + "\n");
+		return false;
 	}
 
 	private boolean addElement(Scanner input, Set set){
@@ -38,8 +56,8 @@ public class Main {
 		return set.add(id);
 	}
 
-	private void calculateAndGiveOutput(){
-	    //TODO make method
+	private void calculateAndGiveOutput(Set set1,Set set2){
+		out.print("end");
 	}
 
 	private boolean askSet(Scanner input, String question, Set set){
@@ -66,7 +84,7 @@ public class Main {
 
 		while(askBothSets(in,set1,set2)){
 			out.print("\n");
-			calculateAndGiveOutput();
+			calculateAndGiveOutput(set1,set2);
 		}
 
 	}

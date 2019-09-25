@@ -56,8 +56,9 @@ public class Set implements SetInterface {
     public int size() {
         int counter = 0;
         for (int i = 0; i < setArray.length; i++) {
-            if (setArray[i] == null) {
-            } counter++;
+            if (setArray[i] != null) {
+                counter++;
+            }
         }
         return counter;
     }
