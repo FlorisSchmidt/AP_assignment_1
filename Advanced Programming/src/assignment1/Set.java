@@ -3,24 +3,20 @@ package assignment1;
 public class Set implements SetInterface {
 
     private Identifier[] setArray;
-    private int index;
 
     Set() {
         setArray = new Identifier[20];
     }
 
     private Set(Set src) {
-        Set setCopy = new Set();
         setArray = new Identifier[20];
         for (int i = 0; i < src.size(); i++) {
             String idtString = src.setArray[i].get();
             Identifier idt = new Identifier();
-            for (int j = 0; j < idtString.length(); j++) {
-                char c = idtString.charAt(j);
+            for (char c : idtString.toCharArray()) {
                 idt.add(c);
             }
             setArray[i] = idt;
-            index = src.index;
         }
     }
 
@@ -32,8 +28,7 @@ public class Set implements SetInterface {
     @Override
     public boolean add(Identifier e) {
         if (size() < 20 && !(contains(e))) {
-            setArray[index] = e;
-            index++;
+            setArray[size()] = e;
             return true;
         }
         return false;
@@ -61,11 +56,8 @@ public class Set implements SetInterface {
     public int size() {
         int counter = 0;
         for (int i = 0; i < setArray.length; i++) {
-            if (setArray[i] != null) {
-                counter++;
-            } else {
-                break;
-            }
+            if (setArray[i] == null) {
+            } counter++;
         }
         return counter;
     }
