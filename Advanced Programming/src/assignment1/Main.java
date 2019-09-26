@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
 
 	private PrintStream out;
-	static final int MAX_NUMBER_OF_ELEMENTS = 10;
+	private static final int MAX_NUMBER_OF_ELEMENTS = 10;
 
 	private boolean inputContainsCorrectSet(Scanner input, Set set) {
 		StringBuffer inputString = new StringBuffer(input.nextLine());
@@ -64,8 +64,12 @@ public class Main {
 
 	private String setToString(Set set){
 		String result = "";
-		for(int i = 0;i<set.size();i++) {
+		int size = set.size();
+		for(int i = 0;i<size;i++) {
 			result = result.concat(set.get().get() + " ");
+		}
+		if(result.length()!=0) {
+			result = result.substring(0, result.length() - 1);
 		}
 		return result;
 	}

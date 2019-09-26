@@ -14,6 +14,15 @@ public class Identifier implements IdentifierInterface {
         init();
     }
 
+    Identifier(Identifier src){
+        sb = new StringBuffer();
+        addWasCalled = src.addWasCalled;
+        String s = src.get();
+        for (char c : s.toCharArray()) {
+            sb.append(c);
+        }
+    }
+
     @Override
     public void init() {
         sb.delete(0,sb.length());

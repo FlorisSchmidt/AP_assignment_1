@@ -11,11 +11,7 @@ public class Set implements SetInterface {
     private Set(Set src) {
         setArray = new Identifier[20];
         for (int i = 0; i < src.size(); i++) {
-            String idtString = src.setArray[i].get();
-            Identifier idt = new Identifier();
-            for (char c : idtString.toCharArray()) {
-                idt.add(c);
-            }
+            Identifier idt  = new Identifier(src.setArray[i]);
             setArray[i] = idt;
         }
     }
