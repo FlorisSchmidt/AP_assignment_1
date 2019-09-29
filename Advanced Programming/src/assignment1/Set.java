@@ -3,9 +3,12 @@ package assignment1;
 public class Set implements SetInterface {
 
     private Identifier[] setArray;
+    private static int MAX_NUMBER_OF_ELEMENTS = 20;
+    private int size;
 
     Set() {
-        setArray = new Identifier[20];
+        setArray = new Identifier[MAX_NUMBER_OF_ELEMENTS];
+        size = 0;
     }
 
     private Set(Set src) {
@@ -14,17 +17,20 @@ public class Set implements SetInterface {
             Identifier idt  = new Identifier(src.setArray[i]);
             setArray[i] = idt;
         }
+        size = src.size;
     }
 
     @Override
     public void init() {
-        setArray = new Identifier[setArray.length];
+        setArray = new Identifier[MAX_NUMBER_OF_ELEMENTS];
+        size = 0;
     }
 
     @Override
     public boolean add(Identifier e) {
-        if (size() < 20 && !(contains(e))) {
-            setArray[size()] = e;
+        if (size < 20 && !(contains(e))) {
+            setArray[size] = e;
+            size++;
             return true;
         }
         return false;
@@ -32,40 +38,37 @@ public class Set implements SetInterface {
 
     @Override
     public Identifier get() {
-        if (size() == 0) return null;
+        if (size == 0) return null;
         Identifier element = setArray[size() - 1];
         setArray[size() - 1] = null;
+        size--;
         return element;
     }
 
     @Override
     public boolean contains(Identifier e) {
-        if (size() == 0) return false;
-        for (int i = 0; i < size(); i++)
+        if (size == 0) return false;
+        for (int i = 0; i < size; i++) {
+
             if (setArray[i].get().equals(e.get())) {
                 return true;
             }
+        }
         return false;
     }
 
     @Override
     public int size() {
-        int counter = 0;
-        for (int i = 0; i < setArray.length; i++) {
-            if (setArray[i] != null) {
-                counter++;
-            }
-        }
-        return counter;
+        return size;
     }
 
 
     @Override
     public boolean equals(Set s) {
-        if (!(size() == s.size())) {
+        if (!(size == s.size())) {
             return false;
         }
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             if (!s.contains(setArray[i])) {
                 System.out.println(i);
                 return false;
@@ -89,7 +92,7 @@ public class Set implements SetInterface {
     public Set difference(Set s) {
         Set differences = new Set();
         Set subject = new Set(this);
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             Identifier idt = subject.get();
             if (!s.contains(idt)) {
                 differences.add(idt);
@@ -102,7 +105,7 @@ public class Set implements SetInterface {
     public Set intersection(Set s) {
         Set intersect = new Set();
         Set subject = new Set(this);
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             Identifier idt = subject.get();
             if (s.contains(idt)) {
                 intersect.add(idt);
@@ -117,7 +120,7 @@ public class Set implements SetInterface {
         Set symDif = new Set();
         Set subject = new Set(this);
         Set comparand = new Set(s);
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < size; i++) {
             Identifier subIdt = subject.get();
             Identifier comIdt = comparand.get();
             if (!s.contains(subIdt)) {

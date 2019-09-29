@@ -32,7 +32,7 @@ public class Main {
 				return throwError("Incorrect input");
 			}
 			if(set.size()>MAX_NUMBER_OF_ELEMENTS){
-				return throwError("To many identities");
+				return throwError("To many identifiers");
 			}
 		}
 		return true;
@@ -93,12 +93,12 @@ public class Main {
 	private void start(){
 		out = new PrintStream(System.out);
 		Scanner in = new Scanner(System.in);
-		Set set1 = new Set(),
-				set2 = new Set();
-
+		Set set1 = new Set(), set2 = new Set();
 		while(askBothSets(in,set1,set2)){
 			out.print("\n");
 			calculateAndGiveOutput(set1,set2);
+			set1.init();
+			set2.init();
 		}
 
 	}
