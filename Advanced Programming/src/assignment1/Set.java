@@ -49,7 +49,6 @@ public class Set implements SetInterface {
     public boolean contains(Identifier e) {
         if (size == 0) return false;
         for (int i = 0; i < size; i++) {
-
             if (setArray[i].get().equals(e.get())) {
                 return true;
             }
@@ -121,15 +120,19 @@ public class Set implements SetInterface {
         Set subject = new Set(this);
         Set comparand = new Set(s);
         for (int i = 0; i < size; i++) {
+            String idx = Integer.toString(i);
             Identifier subIdt = subject.get();
-            Identifier comIdt = comparand.get();
+            String str = subIdt.get();
             if (!s.contains(subIdt)) {
                 symDif.add(subIdt);
             }
+        }
+        for (int j = 0; j < s.size; j++) {
+            Identifier comIdt = comparand.get();
             if (!contains(comIdt)) {
                 symDif.add(comIdt);
+                }
             }
-        }
         return symDif;
     }
 }
