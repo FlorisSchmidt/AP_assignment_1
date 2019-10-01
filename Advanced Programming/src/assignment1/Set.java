@@ -120,9 +120,7 @@ public class Set implements SetInterface {
         Set subject = new Set(this);
         Set comparand = new Set(s);
         for (int i = 0; i < size; i++) {
-            String idx = Integer.toString(i);
             Identifier subIdt = subject.get();
-            String str = subIdt.get();
             if (!s.contains(subIdt)) {
                 symDif.add(subIdt);
             }
