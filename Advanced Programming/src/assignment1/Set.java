@@ -13,7 +13,7 @@ public class Set implements SetInterface {
 
     private Set(Set src) {
         setArray = new Identifier[20];
-        for (int i = 0; i < src.size(); i++) {
+        for (int i = 0; i < src.size; i++) {
             Identifier idt  = new Identifier(src.setArray[i]);
             setArray[i] = idt;
         }
@@ -28,7 +28,7 @@ public class Set implements SetInterface {
 
     @Override
     public boolean add(Identifier e) {
-        if (size < 20 && !(contains(e))) {
+        if (size < MAX_NUMBER_OF_ELEMENTS && !(contains(e))) {
             setArray[size] = e;
             size++;
             return true;
@@ -49,7 +49,7 @@ public class Set implements SetInterface {
     public boolean contains(Identifier e) {
         if (size == 0) return false;
         for (int i = 0; i < size; i++) {
-            if (setArray[i].get().equals(e.get())) {
+            if (setArray[i].equals(e)) {
                 return true;
             }
         }
@@ -68,10 +68,7 @@ public class Set implements SetInterface {
             return false;
         }
         for (int i = 0; i < size; i++) {
-            if (!s.contains(setArray[i])) {
-                System.out.println(i);
-                return false;
-            }
+            if (!s.contains(setArray[i])) return false;
         }
         return true;
     }
