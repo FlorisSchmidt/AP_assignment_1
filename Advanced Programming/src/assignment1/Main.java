@@ -2,6 +2,7 @@ package assignment1;
 
 import java.io.PrintStream;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
 
@@ -9,50 +10,64 @@ public class Main {
 	private static final int MAX_NUMBER_OF_ELEMENTS = 10;
 
 	private boolean inputContainsCorrectSet(Scanner input, Set set) {
-		StringBuffer inputString = new StringBuffer(input.nextLine());
-		if(inputString.length()==0){
-			return false;
+		Scanner s = new Scanner(input.nextLine());
+		s.useDelimiter("");
+		skipSpaces(s);
+
+		if(!s.hasNext()){
+			return throwError("Empty scanner");
 		}
-		if(inputString.charAt(0)!='{'){
-			return throwError("Missing {");
+		if(!nextCharIs(s,'{')){
+			return throwError("Set should start with a {");
 		}
-		if(inputString.charAt(inputString.length()-1)!='}'){
-			return throwError("Missing }");
+		nextChar(s);
+		skipSpaces(s);
+		if(!s.hasNext()){
+			return throwError("Nothing after opening bracket");
 		}
 
-		return initSet(inputString,set);
+		return parseSet(s,set);
 	}
 
-	private boolean initSet(StringBuffer inputString, Set set){
-		Scanner cleanInput = new Scanner(inputString.substring(1,inputString.length()-1));
-
-		while(cleanInput.hasNext()) {
-			if(!addElement(cleanInput, set)){
-				set.init();
-				return throwError("Incorrect input");
-			}
-			if(set.size()>MAX_NUMBER_OF_ELEMENTS){
-				return throwError("To many identifiers");
-			}
+	private boolean parseSet(Scanner s, Set set){
+		if(nextCharIs(s,'}')){
+			return true;
 		}
+
+		if(nextCharIsDigit(s)){
+			return throwError("Identifier can't start with a number");
+		}
+
+		Identifier id = new Identifier();
+		while(s.hasNext()){
+
+			if(nextCharIsDigit(s) || nextCharIsLetter(s)){
+				id.add(nextChar(s));
+			}
+			if(nextCharIs(s, '}')){
+				nextChar(s);
+				skipSpaces(s);
+				if(s.hasNext()){
+					return throwError("No element allowed after }");
+				}
+				break;
+			}
+			if(nextCharIs(s,' ')){
+				skipSpaces(s);
+				parseSet(s,set);
+			}
+			return throwError("Unsuspected char");
+		}
+		if(set.size()==MAX_NUMBER_OF_ELEMENTS){
+			return throwError("To many identifiers");
+		}
+		set.add(id);
 		return true;
 	}
 
 	private boolean throwError(String error){
 		out.print(error + "\n");
 		return false;
-	}
-
-	private boolean addElement(Scanner input, Set set){
-		Identifier id = new Identifier();
-		String chars = input.next();
-		for(int i = 0;i<chars.length();i++){
-			if(id.add(chars.charAt(i))){
-				continue;
-			}
-			return false;
-		}
-		return set.add(id);
 	}
 
 	private void calculateAndGiveOutput(Set set1,Set set2){
@@ -107,4 +122,25 @@ public class Main {
 		new Main().start();
 	}
 
+	private char nextChar(Scanner in) {
+		return in.next().charAt(0);
+	}
+
+	private boolean nextCharIs(Scanner in,char c) {
+		return in.hasNext(Pattern.quote(c+""));
+	}
+
+	private boolean nextCharIsDigit(Scanner in) {
+		return in.hasNext("[0-9]");
+	}
+
+	private boolean nextCharIsLetter(Scanner in) {
+		return in.hasNext("[a-zA-Z]");
+	}
+
+	private void skipSpaces(Scanner s){
+		while(nextCharIs(s, ' ')) {
+			nextChar(s);
+		}
+	}
 }
