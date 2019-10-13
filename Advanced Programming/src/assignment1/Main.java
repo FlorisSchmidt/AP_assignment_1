@@ -15,15 +15,15 @@ public class Main {
 		skipSpaces(s);
 
 		if(!s.hasNext()){
-			return throwError("Empty scanner");
+			return throwError("Empty scanner",set);
 		}
 		if(!nextCharIs(s,'{')){
-			return throwError("Set should start with a {");
+			return throwError("Set should start with a {",set);
 		}
 		nextChar(s);
 		skipSpaces(s);
 		if(!s.hasNext()){
-			return throwError("Nothing after opening bracket");
+			return throwError("Nothing after opening bracket",set);
 		}
 
 		return parseSet(s,set);
@@ -35,7 +35,7 @@ public class Main {
 		}
 
 		if(nextCharIsDigit(s)){
-			return throwError("Identifier can't start with a number");
+			return throwError("Identifier can't start with a number",set);
 		}
 
 		Identifier id = new Identifier();
@@ -43,30 +43,30 @@ public class Main {
 
 			if(nextCharIsDigit(s) || nextCharIsLetter(s)){
 				id.add(nextChar(s));
-			}
-			if(nextCharIs(s, '}')){
+			} else if(nextCharIs(s, '}')){
 				nextChar(s);
 				skipSpaces(s);
 				if(s.hasNext()){
-					return throwError("No element allowed after }");
+					return throwError("No element allowed after }",set);
 				}
 				break;
-			}
-			if(nextCharIs(s,' ')){
+			} else if(nextCharIs(s,' ')){
 				skipSpaces(s);
-				parseSet(s,set);
+				if(set.size()==MAX_NUMBER_OF_ELEMENTS){
+					return throwError("To many identifiers",set);
+				}
+				set.add(id);
+				return parseSet(s,set);
+			} else {
+				return throwError("Unsuspected char",set);
 			}
-			return throwError("Unsuspected char");
 		}
-		if(set.size()==MAX_NUMBER_OF_ELEMENTS){
-			return throwError("To many identifiers");
-		}
-		set.add(id);
 		return true;
 	}
 
-	private boolean throwError(String error){
+	private boolean throwError(String error, Set set){
 		out.print(error + "\n");
+		set.init();
 		return false;
 	}
 
