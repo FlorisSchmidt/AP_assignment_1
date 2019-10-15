@@ -10,17 +10,14 @@ public class Identifier implements IdentifierInterface {
 
     Identifier(){
         sb = new StringBuffer();
-        addWasCalled = false;
         init();
     }
 
     Identifier(Identifier src){
         sb = new StringBuffer();
         addWasCalled = src.addWasCalled;
-        String s = src.get();
-        for (char c : s.toCharArray()) {
-            sb.append(c);
-        }
+        sb.append(src.get());
+
     }
 
     @Override
