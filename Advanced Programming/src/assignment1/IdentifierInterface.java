@@ -26,24 +26,24 @@ public interface IdentifierInterface {
 
     boolean add(char c);
     /* PRE  -
-       POST - true: the char falls inside the domain and is added
-       		  false: the char falls outside of the domain and isn't added
+       POST - true: the char falls inside the domain and is added.
+       		  false: the char falls outside of the domain and is not added.
      */
 
     String get();
     /* PRE  -
-       POST - The string that makes up the identifier has been returned
+       POST - A concatenation of al chars in the identifier has been returned.
      */
 
     int size();
     /* PRE  -
-       POST - the length of the identifier has been returned.
+       POST - the number of chars in the identifier has been returned.
      */
 
     boolean equals(Identifier comparand);
     /* PRE  -
        POST - true: The value of this identifier is equal to the value of the argument identifier.
-       		  false: The value of this identifier is not equal to the value of the argument identifier
+       		  false: The value of this identifier is not equal to the value of the argument identifier.
      */
 
 }

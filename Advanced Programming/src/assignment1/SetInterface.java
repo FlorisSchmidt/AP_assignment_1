@@ -24,15 +24,16 @@ public interface SetInterface {
      */
 
     boolean add (Identifier e);
-    /*  PRE - The size of the set is less than 20
-        POST - The element has been added to the set
-               @return  True: if element has been added
-                        False: if element has not been added
+    /*  PRE -
+        POST - If Set-PRE had a size < 20 the element is present in set-POST.
+               Returns true if the element has been added.
+               Returns false if the element was already present in set-PRE or set size exceeded 19.
      */
 
     Identifier get();
-    /*  PRE - The set is not empty
-        POST - Returns and removes an Identifier element from the set.
+    /*  PRE -
+        POST - An element from the set has been returned.
+               If the set was empty, null has been returned.
      */
 
     boolean contains(Identifier e);
