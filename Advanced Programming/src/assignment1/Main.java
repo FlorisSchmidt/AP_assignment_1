@@ -30,25 +30,33 @@ public class Main {
 	}
 
 	private boolean parseSet(Scanner s, Set set){
-		if(nextCharIs(s,'}')){
-			return true;
+
+		if(!parseIdentifiers(s,set)){
+			return false;
 		}
 
+		if(!s.hasNext()){
+			return throwError("Set should end with }",set);
+		}
+		nextChar(s);
+		skipSpaces(s);
+		if(s.hasNext()){
+			return throwError("No element allowed after }",set);
+		}
+		return true;
+	}
+
+	private boolean parseIdentifiers(Scanner s, Set set){
+		Identifier id = new Identifier();
 		if(nextCharIsDigit(s)){
 			return throwError("Identifier can't start with a number",set);
 		}
 
-		Identifier id = new Identifier();
 		while(s.hasNext()){
 
 			if(nextCharIsDigit(s) || nextCharIsLetter(s)){
 				id.add(nextChar(s));
 			} else if(nextCharIs(s, '}')){
-				nextChar(s);
-				skipSpaces(s);
-				if(s.hasNext()){
-					return throwError("No element allowed after }",set);
-				}
 				break;
 			} else if(nextCharIs(s,' ')){
 				skipSpaces(s);
@@ -56,7 +64,7 @@ public class Main {
 					return throwError("To many identifiers",set);
 				}
 				set.add(id);
-				return parseSet(s,set);
+				return parseIdentifiers(s,set);
 			} else {
 				return throwError("Unsuspected char",set);
 			}
@@ -115,7 +123,6 @@ public class Main {
 			set1.init();
 			set2.init();
 		}
-
 	}
 
 	public static void main(String[] args) {
