@@ -10,45 +10,40 @@ public interface IdentifierInterface {
      constructors
 
         * Identifier(); *
-        PRE  -
-        *   POST -A new Identifier has been made and contains the character x *
-        *
-        Identifier
-        PRE  -  *
-        POST - A new Identifier-object has been made and contains a copy of src.
-
+    *   PRE  -
+    *   POST -A new Identifier has been made and contains the character x *
+    *
+    *  Identifier
+    *   PRE  -  *
+    *       POST - A new Identifier-object has been made and contains a copy of src.
+    *
     */
 
     void init();
-    /*
-     * PRE -
-     * POST - Identifier has one char
+    /* PRE  -
+       POST - Identifier has one char
      */
 
     boolean add(char c);
-    /*
-     * PRE -
-     * POST - true: the char falls inside the domain and is added
-     * 		  false: the char falls outside of the domain and isn't added
+    /* PRE  -
+       POST - true: the char falls inside the domain and is added.
+       		  false: the char falls outside of the domain and is not added.
      */
 
     String get();
-    /*
-     * PRE -
-     * POST - The string that makes up the identifier has been returned
+    /* PRE  -
+       POST - A concatenation of al chars in the identifier has been returned.
      */
 
     int size();
-    /*
-     * PRE -
-     * POST - the size of the Identifier is returned
+    /* PRE  -
+       POST - the number of chars in the identifier has been returned.
      */
 
     boolean equals(Identifier comparand);
-    /*
-     * PRE - the identifiers need to have the same size
-     * POST - true: The identifier is the same as the identifier passed
-     * 		  false: The identifier is not the same as the identifier passed
+    /* PRE  -
+       POST - true: The value of this identifier is equal to the value of the argument identifier.
+       		  false: The value of this identifier is not equal to the value of the argument identifier.
      */
 
 }
